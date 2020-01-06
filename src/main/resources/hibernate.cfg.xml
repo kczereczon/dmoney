@@ -16,5 +16,6 @@
         <!-- Model class -->
         <mapping class="app.models.Category"/>
         <mapping class="app.models.Subcategory"/>
+        <mapping class="app.models.Entry"/>
     </session-factory>
 </hibernate-configuration>
