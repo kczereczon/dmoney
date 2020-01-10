@@ -83,3 +83,11 @@
     -fx-text-fill: #fcfffc;
     -fx-prompt-text-fill: rgba(252, 255, 252, 0.24);
 }
+
+.button-active {
+    -fx-background-color: #2d3636;
+}
+
+.button-active:hover {
+    -fx-background-color: #2d3636;
+}

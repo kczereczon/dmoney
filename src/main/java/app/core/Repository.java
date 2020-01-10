@@ -1,13 +1,9 @@
 package app.core;
 
 
-import com.sun.xml.bind.v2.model.core.ID;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.Session;
-
-import javax.persistence.Id;
-import javax.persistence.Table;
 import java.lang.reflect.ParameterizedType;
 import java.sql.Timestamp;
 import java.util.List;
@@ -29,7 +25,6 @@ public abstract class Repository<T extends Model> {
         return (T) getSession().load(type, id);
     }
 
-    @SuppressWarnings("unchecked")
     public T makePersistent(T entity) {
         getSession().getTransaction().begin();
         getSession().save(entity);

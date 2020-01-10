@@ -41,16 +41,23 @@ public class ApplicationController {
     DatabaseController databaseController = new DatabaseController();
 
     public void onDashboardClick(MouseEvent mouseEvent) {
-
+       clearActivatedButtons();
+       dashboard.getStyleClass().add("button-active");
     }
 
     public void onStatisticsClick(MouseEvent mouseEvent) {
+        clearActivatedButtons();
+        statistics.getStyleClass().add("button-active");
     }
 
     public void onPlansClick(MouseEvent mouseEvent) {
+        clearActivatedButtons();
+        plans.getStyleClass().add("button-active");
     }
 
     public void onCategoriesClick(MouseEvent mouseEvent) {
+        clearActivatedButtons();
+        categories.getStyleClass().add("button-active");
     }
 
     public void onAddEntryClick(MouseEvent mouseEvent) {
@@ -101,5 +108,12 @@ public class ApplicationController {
 
         ObservableList<Subcategory> observableList = FXCollections.observableArrayList(databaseController.subcategoryRepository.list());
         categoriesList.setItems(observableList);
+    }
+
+    private void clearActivatedButtons() {
+        statistics.getStyleClass().remove("button-active");
+        dashboard.getStyleClass().remove("button-active");
+        plans.getStyleClass().remove("button-active");
+        categories.getStyleClass().remove("button-active");
     }
 }
