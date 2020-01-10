@@ -1,0 +1,85 @@
+.combo-box .list-cell
+{
+    -fx-background: #2d3636;
+    -fx-background-color: transparent;
+    -fx-text-fill: #fcfffc;
+    -fx-padding: 3 0 2 7;
+    -fx-cell-size: 1.66667em;
+}
+
+.combo-box-popup .list-view
+{
+    -fx-background-color: #2d3636, #2d3636;
+    -fx-background-insets: 0, 1;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 8, 0.0 , 0 , 0 );
+}
+
+.combo-box-popup .list-view .list-cell
+{
+    -fx-padding: 4 0 4 5;
+
+    /* No alternate highlighting */
+    -fx-background-color: #2d3636;
+}
+
+.combo-box-popup .list-view .list-cell:filled:selected, .combo-box-popup .list-view .list-cell:filled:selected:hover
+{
+    -fx-background: #2d3636;
+    -fx-background-color: #248232;
+    -fx-text-fill: #fcfffc;
+}
+
+.combo-box-popup .list-view .list-cell:filled:hover
+{
+    -fx-background-color: #2ea83f;
+    -fx-text-fill: #fcfffc;
+}
+
+.combo-box-base
+{
+    /*-fx-skin: "com.sun.javafx.scene.control.skin.ComboBoxBaseSkin";*/
+    -fx-background-color: #2d3636, #2d3636, #2d3636, #2d3636;
+    -fx-background-radius: 0;
+    -fx-background-insets: 0 0 -1 0, 0, 1, 2;
+    -fx-padding: 0;
+}
+
+.combo-box-base:hover
+{
+    -fx-color: -fx-hover-base;
+}
+
+.combo-box-base:showing
+{
+    -fx-color: #2d3636;
+}
+
+.combo-box-base:focused {
+    -fx-background-color: #2d3636, #2d3636, #2d3636, #2d3636;
+    -fx-background-radius: 0;
+    -fx-background-insets: -1.4, 0, 1, 2;
+}
+
+.combo-box-base:disabled {
+    -fx-opacity: .4;
+}
+
+.button:hover {
+    -fx-background-color: #2ea83f;
+}
+
+.button {
+    -fx-background-color: #248232;
+    -fx-background-radius: 0;
+}
+
+.button:pressed {
+    -fx-background-color: #195321;
+}
+
+.input {
+    -fx-background-radius: 0;
+    -fx-background-color: #2d3636;
+    -fx-text-fill: #fcfffc;
+    -fx-prompt-text-fill: rgba(252, 255, 252, 0.24);
+}

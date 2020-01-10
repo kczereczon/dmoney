@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 
 @MappedSuperclass
 @Getter @Setter
-public class Model {
+public abstract class Model {
 
     public Model() {
         this.createdAt = new Timestamp(System.currentTimeMillis());

@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.lang.reflect.ParameterizedType;
 import java.sql.Timestamp;
+import java.util.List;
 
 public abstract class Repository<T extends Model> {
 
@@ -51,6 +52,12 @@ public abstract class Repository<T extends Model> {
         getSession().getTransaction().begin();
         getSession().delete(entity);
         getSession().getTransaction().commit();
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<T> list() {
+        getSession().beginTransaction();
+        return getSession().createCriteria(type).list();
     }
 
 }
