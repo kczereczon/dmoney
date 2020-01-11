@@ -91,3 +91,7 @@
 .button-active:hover {
     -fx-background-color: #2d3636;
 }
+
+.table-view {
+    -fx-background-color: transparent;
+}

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.cell.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+
+<VBox BorderPane.alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="800.0" spacing="10.0" style="-fx-background-color: #2d3636;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.gui.controllers.DashboardController">
+   <children>
+      <Label text="Entries created today" textFill="#fcfffc">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Label>
+      <TableView fx:id="entriesList" fixedCellSize="0.0" prefHeight="200.0" prefWidth="2.0" VBox.vgrow="NEVER">
+        <columns>
+          <TableColumn prefWidth="169.0" text="Name of product">
+              <cellValueFactory>
+                  <PropertyValueFactory property="name" />
+              </cellValueFactory>
+          </TableColumn>
+            <TableColumn prefWidth="31.0" text="Category">
+                <cellValueFactory>
+                    <PropertyValueFactory property="category.name" />
+                </cellValueFactory>
+            </TableColumn>
+          <TableColumn minWidth="0.0" prefWidth="89.0" text="Quantity">
+              <cellValueFactory>
+                  <PropertyValueFactory property="quantity" />
+              </cellValueFactory>
+          </TableColumn>
+            <TableColumn prefWidth="114.0" text="Price per unit">
+                <cellValueFactory>
+                    <PropertyValueFactory property="value" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn prefWidth="75.0" text="Total">
+                <cellValueFactory>
+                    <PropertyValueFactory property="name" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn minWidth="0.0" prefWidth="20.0" />
+        </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+      </TableView>
+      <Label text="Today spent: " textFill="#fcfffc">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Label>
+   </children>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
+</VBox>

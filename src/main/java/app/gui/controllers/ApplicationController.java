@@ -6,9 +6,12 @@ import app.models.Subcategory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -17,6 +20,8 @@ import javafx.util.StringConverter;
 import org.hibernate.dialect.Database;
 
 import javax.persistence.PostLoad;
+import java.io.IOException;
+import java.util.Collection;
 
 public class ApplicationController {
     @FXML
@@ -37,27 +42,33 @@ public class ApplicationController {
     public ComboBox<String> direction;
     @FXML
     public TextField name;
+    @FXML
+    public VBox page;
 
     DatabaseController databaseController = new DatabaseController();
 
     public void onDashboardClick(MouseEvent mouseEvent) {
        clearActivatedButtons();
        dashboard.getStyleClass().add("button-active");
+       loadPage("dashboard");
     }
 
     public void onStatisticsClick(MouseEvent mouseEvent) {
         clearActivatedButtons();
         statistics.getStyleClass().add("button-active");
+        loadPage("statistics");
     }
 
     public void onPlansClick(MouseEvent mouseEvent) {
         clearActivatedButtons();
         plans.getStyleClass().add("button-active");
+        loadPage("plans");
     }
 
     public void onCategoriesClick(MouseEvent mouseEvent) {
         clearActivatedButtons();
         categories.getStyleClass().add("button-active");
+        loadPage("categories");
     }
 
     public void onAddEntryClick(MouseEvent mouseEvent) {
@@ -94,6 +105,8 @@ public class ApplicationController {
     @FXML
     private void initialize()
     {
+        loadPage("dashboard");
+
         categoriesList.setConverter(new StringConverter<Subcategory>() {
             @Override
             public String toString(Subcategory object) {
@@ -115,5 +128,16 @@ public class ApplicationController {
         dashboard.getStyleClass().remove("button-active");
         plans.getStyleClass().remove("button-active");
         categories.getStyleClass().remove("button-active");
+    }
+
+    private void loadPage(String name) {
+        try {
+            Node node;
+            node = (Node)FXMLLoader.load(getClass().getClassLoader().getResource("views/"+name+".fxml"));
+
+            page.getChildren().setAll(node);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

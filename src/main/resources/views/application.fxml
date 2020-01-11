@@ -22,12 +22,12 @@
             </Pane>
             <VBox layoutY="86.0" prefHeight="369.0" prefWidth="244.0" spacing="15.0">
                <children>
-                  <Button fx:id="statistics" mnemonicParsing="false" onMouseClicked="#onStatisticsClick" prefHeight="25.0" prefWidth="252.0" style="-fx-pref-height: 50px;" styleClass="button-active" text="Dashboard" textFill="#fcfffc">
-                     <font>
-                        <Font size="17.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="dashboard" mnemonicParsing="false" onMouseClicked="#onDashboardClick" prefHeight="25.0" prefWidth="252.0" style="-fx-pref-height: 50px;" text="Statistics" textFill="#fcfffc">
+                   <Button fx:id="dashboard" mnemonicParsing="false" onMouseClicked="#onDashboardClick" prefHeight="25.0" prefWidth="252.0" style="-fx-pref-height: 50px;" styleClass="button-active" text="Dashboard" textFill="#fcfffc">
+                       <font>
+                           <Font size="17.0" />
+                       </font>
+                   </Button>
+                  <Button fx:id="statistics" mnemonicParsing="false" onMouseClicked="#onStatisticsClick" prefHeight="25.0" prefWidth="252.0" style="-fx-pref-height: 50px;" text="Statistics" textFill="#fcfffc">
                      <font>
                         <Font size="17.0" />
                      </font>
@@ -71,6 +71,9 @@
                </BorderPane.margin>
             </HBox>
          </top>
+         <center>
+            <VBox fx:id="page" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+         </center>
       </BorderPane>
    </center>
 </BorderPane>
