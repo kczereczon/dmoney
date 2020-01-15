@@ -76,10 +76,7 @@
                <content>
                   <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0" styleClass="dark-background">
                      <children>
-                        <ProgressBar prefHeight="20.0" prefWidth="795.0" progress="0.0" />
-                        <ProgressBar prefHeight="20.0" prefWidth="795.0" progress="0.0" />
-                        <ProgressBar prefHeight="20.0" prefWidth="795.0" progress="0.0" />
-                        <ProgressBar prefHeight="20.0" prefWidth="795.0" progress="0.0" />
+                        <ProgressBar prefHeight="20.0" progress="0.48" VBox.vgrow="ALWAYS" />
                      </children>
                      <padding>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
