@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -43,7 +44,10 @@ public class ApplicationController {
     @FXML
     public TextField name;
     @FXML
-    public VBox page;
+    public BorderPane borderPane;
+
+    double pageWidth;
+    double pageHeight;
 
     DatabaseController databaseController = new DatabaseController();
 
@@ -134,8 +138,7 @@ public class ApplicationController {
         try {
             Node node;
             node = (Node)FXMLLoader.load(getClass().getClassLoader().getResource("views/"+name+".fxml"));
-
-            page.getChildren().setAll(node);
+            borderPane.setCenter(node);
         } catch (IOException e) {
             e.printStackTrace();
         }

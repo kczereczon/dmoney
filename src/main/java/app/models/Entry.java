@@ -39,4 +39,12 @@ public class Entry extends Model {
 
     @Column(name = "is_income")
     private Boolean isIncome;
+
+    public String getSubcategoryName() {
+        return subcategory.getCategory().getName() + " - " + subcategory.getName();
+    }
+
+    public Float getTotal() {
+        return value * quantity;
+    }
 }

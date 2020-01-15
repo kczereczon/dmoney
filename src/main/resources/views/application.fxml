@@ -48,7 +48,7 @@
       </AnchorPane>
    </left>
    <center>
-      <BorderPane prefHeight="463.0" prefWidth="861.0" style="-fx-background-color: #2d3636;" BorderPane.alignment="CENTER">
+      <BorderPane fx:id="borderPane" prefHeight="463.0" prefWidth="861.0" style="-fx-background-color: #2d3636;" BorderPane.alignment="CENTER">
          <top>
             <HBox prefHeight="86.0" prefWidth="200.0" spacing="10.0" style="-fx-background-color: #040F0F;" BorderPane.alignment="TOP_CENTER">
                <children>
@@ -72,7 +72,7 @@
             </HBox>
          </top>
          <center>
-            <VBox fx:id="page" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+
          </center>
       </BorderPane>
    </center>
