@@ -1,0 +1,144 @@
+package app.gui.controllers;
+
+import app.DatabaseController;
+import app.gui.Application;
+import app.models.Category;
+import app.models.Subcategory;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.Event;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
+import javafx.util.StringConverter;
+
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class CategoriesController implements Initializable {
+
+    @FXML
+    public TextField categoryNameTextField;
+    @FXML
+    public Button addCategoryButton;
+    @FXML
+    public TableView<Category> categoriesTable;
+    @FXML
+    public TableColumn<Category, String> categoryNameColumn;
+    @FXML
+    public TableColumn<Category, String> categoryCreatedAtColumn;
+    @FXML
+    public TableColumn<Category, String> categoryUpdatedAtColumn;
+    @FXML
+    public TableColumn<Category, String> categoryTotalSpendColumn;
+    @FXML
+    public TextField subcategoryNameTextField;
+    @FXML
+    public ComboBox<Category> categorySelect;
+    @FXML
+    public Button addSubcategoryButton;
+    @FXML
+    public TableView<Subcategory> subcategoryTable;
+    @FXML
+    public TableColumn<Subcategory, String> subcategoryNameColumn;
+    @FXML
+    public TableColumn<Subcategory, String> subcategoryCategoryColumn;
+    @FXML
+    public TableColumn<Subcategory, String> subcategoryCreatedAtColumn;
+    @FXML
+    public TableColumn<Subcategory, String> subcategoryUpdatedAtColumn;
+    @FXML
+    public TableColumn<Subcategory, String> subcategoryTotalSpendColumn;
+
+    DatabaseController databaseController = Application.databaseController;
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        categorySelect.setConverter(new StringConverter<Category>() {
+            @Override
+            public String toString(Category object) {
+                return object.getName();
+            }
+
+            @Override
+            public Category fromString(String string) {
+                return null;
+            }
+        });
+
+        //add categories to list
+        setCategorySelectItems();
+
+        setCategoryTable();
+    }
+
+    public void setCategorySelectItems() {
+        ObservableList<Category> observableList = FXCollections.observableArrayList(
+            databaseController.categoryRepository.list());
+        categorySelect.setItems(observableList);
+    }
+
+    public void onAddCategoryButtonClicked(MouseEvent mouseEvent) {
+        String name = categoryNameTextField.getText();
+
+        Category category = new Category(name);
+
+        databaseController.categoryRepository.makePersistent(category);
+
+        setCategoryTable();
+        setCategorySelectItems();
+        clearCategoryForm();
+    }
+
+    public void onAddSubcategoryButtonClicked(MouseEvent mouseEvent) {
+        String name = subcategoryNameTextField.getText();
+        Category category = categorySelect.getValue();
+
+        Subcategory subcategory = new Subcategory(name, category);
+
+        databaseController.subcategoryRepository.makePersistent(subcategory);
+
+        setSubcategoryTable();
+        clearSubcategoryForm();
+    }
+
+    public void clearSubcategoryForm() {
+        subcategoryNameTextField.setText("");
+        categorySelect.valueProperty().set(null);
+    }
+
+    public void clearCategoryForm() {
+        categoryNameTextField.setText("");
+    }
+
+    private void setCategoryTable() {
+        categoriesTable.setItems(FXCollections.observableArrayList(
+            databaseController.categoryRepository.list()));
+
+        categoryNameColumn.setCellValueFactory(c-> new SimpleStringProperty(c.getValue().getName()));
+        categoryCreatedAtColumn.setCellValueFactory(c-> new SimpleStringProperty(c.getValue().getCreatedAt().toString()));
+        categoryUpdatedAtColumn.setCellValueFactory(c-> new SimpleStringProperty(c.getValue().getUpdatedAt().toString()));
+        categoryTotalSpendColumn.setCellValueFactory(c-> new SimpleStringProperty(String.format("%.2f", c.getValue().getTotal())));
+    }
+
+    private void setSubcategoryTable() {
+        subcategoryTable.setItems(FXCollections.observableArrayList(
+            databaseController.subcategoryRepository.list()));
+
+        subcategoryNameColumn.setCellValueFactory(c-> new SimpleStringProperty(c.getValue().getName()));
+        subcategoryCreatedAtColumn.setCellValueFactory(c-> new SimpleStringProperty(c.getValue().getCreatedAt().toString()));
+        subcategoryCategoryColumn.setCellValueFactory(c-> new SimpleStringProperty(c.getValue().getCategory().getName()));
+        subcategoryUpdatedAtColumn.setCellValueFactory(c-> new SimpleStringProperty(c.getValue().getUpdatedAt().toString()));
+        subcategoryTotalSpendColumn.setCellValueFactory(c-> new SimpleStringProperty(String.format("%.2f", c.getValue().getTotal())));
+    }
+
+    public void onCategoryChanged(Event event) {
+        setCategoryTable();
+    }
+
+    public void onSubcategoryChanged(Event event) {
+        setSubcategoryTable();
+    }
+}

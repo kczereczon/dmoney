@@ -22,4 +22,16 @@ public class Category extends Model {
     @OneToMany(cascade=CascadeType.ALL)
     @JoinColumn(name = "category_id")
     private List<Subcategory> subcategories;
+
+    public Float getTotal() {
+        float total = 0;
+
+        if(subcategories != null) {
+            for (Subcategory subcategory : subcategories
+            ) {
+                total += subcategory.getTotal();
+            }
+        }
+        return total;
+    }
 }

@@ -6,11 +6,11 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox prefHeight="253.0" prefWidth="442.0" BorderPane.alignment="CENTER" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="253.0" prefWidth="442.0" BorderPane.alignment="CENTER" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.gui.controllers.PlansController">
     <children>
         <TabPane tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
          <tabs>
-            <Tab text="Creator">
+            <Tab text="Creator" styleClass="dark-background">
                <content>
                   <ScrollPane fitToWidth="true" prefHeight="200.0" prefWidth="200.0">
                      <content>
@@ -23,7 +23,7 @@
                   </ScrollPane>
                </content>
             </Tab>
-            <Tab text="List">
+            <Tab text="List" styleClass="dark-background">
                <content>
                   <VBox prefHeight="200.0" prefWidth="275.0">
                      <children>

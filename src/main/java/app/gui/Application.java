@@ -1,5 +1,6 @@
 package app.gui;
 
+import app.DatabaseController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -12,8 +13,12 @@ public class Application extends javafx.application.Application {
         launch();
     }
 
+    public static DatabaseController databaseController;
+
     @Override
     public void start(Stage stage) throws Exception {
+        databaseController = new DatabaseController();
+
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("views/application.fxml"));
         BorderPane root = (BorderPane) loader.load();
         Scene scene = new Scene(root);

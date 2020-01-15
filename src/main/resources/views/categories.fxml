@@ -6,29 +6,29 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox BorderPane.alignment="CENTER" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<VBox BorderPane.alignment="CENTER" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.gui.controllers.CategoriesController">
    <children>
       <TabPane tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
         <tabs>
-          <Tab text="Categories">
+          <Tab onSelectionChanged="#onCategoryChanged" text="Categories">
                <content>
                   <VBox prefHeight="200.0" prefWidth="100.0" styleClass="dark-background">
                      <children>
                         <HBox alignment="CENTER" prefWidth="580.0" spacing="10.0">
                            <children>
-                              <TextField promptText="Name of Category" HBox.hgrow="ALWAYS" />
-                              <Button alignment="CENTER_RIGHT" mnemonicParsing="false" text="Add" />
+                              <TextField fx:id="categoryNameTextField" promptText="Name of Category" HBox.hgrow="ALWAYS" />
+                              <Button fx:id="addCategoryButton" alignment="CENTER_RIGHT" mnemonicParsing="false" onMouseClicked="#onAddCategoryButtonClicked" text="Add" />
                            </children>
                            <padding>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </padding>
                         </HBox>
-                        <TableView prefHeight="200.0" prefWidth="200.0">
+                        <TableView fx:id="categoriesTable" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                           <columns>
-                            <TableColumn prefWidth="75.0" text="Name" />
-                            <TableColumn prefWidth="75.0" text="Created At" />
-                              <TableColumn prefWidth="75.0" text="Updated At" />
-                              <TableColumn prefWidth="75.0" text="Total spend" />
+                            <TableColumn fx:id="categoryNameColumn" prefWidth="75.0" text="Name" />
+                            <TableColumn fx:id="categoryCreatedAtColumn" prefWidth="75.0" text="Created At" />
+                              <TableColumn fx:id="categoryUpdatedAtColumn" prefWidth="75.0" text="Updated At" />
+                              <TableColumn fx:id="categoryTotalSpendColumn" prefWidth="75.0" text="Total spend" />
                           </columns>
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -38,27 +38,27 @@
                   </VBox>
                </content>
           </Tab>
-          <Tab text="Subcategories">
+          <Tab onSelectionChanged="#onSubcategoryChanged" text="Subcategories">
                <content>
                   <VBox prefHeight="200.0" prefWidth="100.0" styleClass="dark-background">
                      <children>
                         <HBox alignment="CENTER" prefWidth="580.0" spacing="10.0">
                            <children>
-                              <TextField promptText="Name of Subcateogry" HBox.hgrow="ALWAYS" />
-                              <ComboBox prefWidth="150.0" promptText="Category" />
-                              <Button contentDisplay="CENTER" mnemonicParsing="false" text="Add" textOverrun="CENTER_WORD_ELLIPSIS" />
+                              <TextField fx:id="subcategoryNameTextField" promptText="Name of Subcateogry" HBox.hgrow="ALWAYS" />
+                              <ComboBox fx:id="categorySelect" prefWidth="150.0" promptText="Category" />
+                              <Button fx:id="addSubcategoryButton" contentDisplay="CENTER" mnemonicParsing="false" onMouseClicked="#onAddSubcategoryButtonClicked" text="Add" textOverrun="CENTER_WORD_ELLIPSIS" />
                            </children>
                            <padding>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </padding>
                         </HBox>
-                        <TableView prefHeight="200.0" prefWidth="200.0">
+                        <TableView fx:id="subcategoryTable" prefHeight="200.0" prefWidth="200.0">
                           <columns>
-                            <TableColumn editable="false" prefWidth="75.0" text="Name" />
-                            <TableColumn editable="false" prefWidth="75.0" text="Category" />
-                              <TableColumn editable="false" prefWidth="75.0" text="Created At" />
-                              <TableColumn editable="false" prefWidth="75.0" text="Updated At" />
-                              <TableColumn editable="false" prefWidth="75.0" text="Total Spend" />
+                            <TableColumn fx:id="subcategoryNameColumn" editable="false" prefWidth="75.0" text="Name" />
+                            <TableColumn fx:id="subcategoryCategoryColumn" editable="false" prefWidth="75.0" text="Category" />
+                              <TableColumn fx:id="subcategoryCreatedAtColumn" editable="false" prefWidth="75.0" text="Created At" />
+                              <TableColumn fx:id="subcategoryUpdatedAtColumn" editable="false" prefWidth="75.0" text="Updated At" />
+                              <TableColumn fx:id="subcategoryTotalSpendColumn" editable="false" prefWidth="75.0" text="Total Spend" />
                           </columns>
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

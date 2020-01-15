@@ -1,6 +1,7 @@
 package app.gui.controllers;
 
 import app.DatabaseController;
+import app.gui.Application;
 import app.models.Entry;
 import app.models.Subcategory;
 import javafx.collections.FXCollections;
@@ -49,7 +50,7 @@ public class ApplicationController {
     double pageWidth;
     double pageHeight;
 
-    DatabaseController databaseController = new DatabaseController();
+    DatabaseController databaseController = Application.databaseController;
 
     public void onDashboardClick(MouseEvent mouseEvent) {
        clearActivatedButtons();
@@ -123,7 +124,8 @@ public class ApplicationController {
             }
         });
 
-        ObservableList<Subcategory> observableList = FXCollections.observableArrayList(databaseController.subcategoryRepository.list());
+        ObservableList<Subcategory> observableList = FXCollections.observableArrayList(
+            databaseController.subcategoryRepository.list());
         categoriesList.setItems(observableList);
     }
 

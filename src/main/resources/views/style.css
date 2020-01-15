@@ -134,6 +134,10 @@
     -fx-background-color: transparent;
 }
 
+.table-cell {
+    -fx-alignment: CENTER;
+}
+
 .table-row-cell:odd{
     -fx-background-color: transparent;
 }
