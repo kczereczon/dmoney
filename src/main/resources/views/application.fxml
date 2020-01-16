@@ -59,7 +59,7 @@
                   </TextField>
                   <TextField fx:id="quantity" prefHeight="25.0" prefWidth="122.0" promptText="Quantity" styleClass="input" />
                   <TextField fx:id="value" prefHeight="25.0" prefWidth="100.0" promptText="Value" styleClass="input" />
-                  <ComboBox fx:id="categoriesList" prefHeight="25.0" prefWidth="117.0" promptText="Categories" />
+                  <ComboBox fx:id="categoriesList" onMouseClicked="#onCategoriesListClicked" prefHeight="25.0" prefWidth="117.0" promptText="Categories" />
                   <ComboBox fx:id="direction" prefHeight="25.0" prefWidth="117.0" promptText="Direction" />
                   <Button mnemonicParsing="false" onMouseClicked="#onAddEntryClick" text="Add" textFill="#fcfffc" />
                </children>

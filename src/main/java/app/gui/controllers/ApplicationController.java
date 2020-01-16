@@ -11,19 +11,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
-import org.hibernate.dialect.Database;
-
-import javax.persistence.PostLoad;
 import java.io.IOException;
-import java.util.Collection;
+import java.util.Objects;
 
 public class ApplicationController {
     @FXML
@@ -47,36 +42,34 @@ public class ApplicationController {
     @FXML
     public BorderPane borderPane;
 
-    double pageWidth;
-    double pageHeight;
 
     DatabaseController databaseController = Application.databaseController;
 
-    public void onDashboardClick(MouseEvent mouseEvent) {
+    public void onDashboardClick() {
        clearActivatedButtons();
        dashboard.getStyleClass().add("button-active");
        loadPage("dashboard");
     }
 
-    public void onStatisticsClick(MouseEvent mouseEvent) {
+    public void onStatisticsClick() {
         clearActivatedButtons();
         statistics.getStyleClass().add("button-active");
         loadPage("statistics");
     }
 
-    public void onPlansClick(MouseEvent mouseEvent) {
+    public void onPlansClick() {
         clearActivatedButtons();
         plans.getStyleClass().add("button-active");
         loadPage("plans");
     }
 
-    public void onCategoriesClick(MouseEvent mouseEvent) {
+    public void onCategoriesClick() {
         clearActivatedButtons();
         categories.getStyleClass().add("button-active");
         loadPage("categories");
     }
 
-    public void onAddEntryClick(MouseEvent mouseEvent) {
+    public void onAddEntryClick() {
         Entry entry = new Entry(name.getText(),
             Float.parseFloat(value.getText()),
             Integer.parseInt(quantity.getText()),
@@ -112,10 +105,10 @@ public class ApplicationController {
     {
         loadPage("dashboard");
 
-        categoriesList.setConverter(new StringConverter<Subcategory>() {
+        categoriesList.setConverter(new StringConverter<>() {
             @Override
             public String toString(Subcategory object) {
-                return "["+object.getCategory().getName().toUpperCase() + "]  "+ object.getName();
+                return "[" + object.getCategory().getName().toUpperCase() + "]  " + object.getName();
             }
 
             @Override
@@ -124,9 +117,7 @@ public class ApplicationController {
             }
         });
 
-        ObservableList<Subcategory> observableList = FXCollections.observableArrayList(
-            databaseController.subcategoryRepository.list());
-        categoriesList.setItems(observableList);
+        setCategoriesListItems();
     }
 
     private void clearActivatedButtons() {
@@ -139,10 +130,20 @@ public class ApplicationController {
     private void loadPage(String name) {
         try {
             Node node;
-            node = (Node)FXMLLoader.load(getClass().getClassLoader().getResource("views/"+name+".fxml"));
+            node = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("views/" + name + ".fxml")));
             borderPane.setCenter(node);
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void onCategoriesListClicked() {
+        setCategoriesListItems();
+    }
+
+    public void setCategoriesListItems() {
+        ObservableList<Subcategory> observableList = FXCollections.observableArrayList(
+            databaseController.subcategoryRepository.list());
+        categoriesList.setItems(observableList);
     }
 }

@@ -7,11 +7,9 @@ import app.models.Subcategory;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.util.StringConverter;
 
 import java.net.URL;
@@ -56,7 +54,7 @@ public class CategoriesController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        categorySelect.setConverter(new StringConverter<Category>() {
+        categorySelect.setConverter(new StringConverter<>() {
             @Override
             public String toString(Category object) {
                 return object.getName();
@@ -80,7 +78,7 @@ public class CategoriesController implements Initializable {
         categorySelect.setItems(observableList);
     }
 
-    public void onAddCategoryButtonClicked(MouseEvent mouseEvent) {
+    public void onAddCategoryButtonClicked() {
         String name = categoryNameTextField.getText();
 
         Category category = new Category(name);
@@ -92,7 +90,7 @@ public class CategoriesController implements Initializable {
         clearCategoryForm();
     }
 
-    public void onAddSubcategoryButtonClicked(MouseEvent mouseEvent) {
+    public void onAddSubcategoryButtonClicked() {
         String name = subcategoryNameTextField.getText();
         Category category = categorySelect.getValue();
 
@@ -118,8 +116,8 @@ public class CategoriesController implements Initializable {
             databaseController.categoryRepository.list()));
 
         categoryNameColumn.setCellValueFactory(c-> new SimpleStringProperty(c.getValue().getName()));
-        categoryCreatedAtColumn.setCellValueFactory(c-> new SimpleStringProperty(c.getValue().getCreatedAt().toString()));
-        categoryUpdatedAtColumn.setCellValueFactory(c-> new SimpleStringProperty(c.getValue().getUpdatedAt().toString()));
+        categoryCreatedAtColumn.setCellValueFactory(c-> new SimpleStringProperty(c.getValue().getCreatedAt()));
+        categoryUpdatedAtColumn.setCellValueFactory(c-> new SimpleStringProperty(c.getValue().getUpdatedAt()));
         categoryTotalSpendColumn.setCellValueFactory(c-> new SimpleStringProperty(String.format("%.2f", c.getValue().getTotal())));
     }
 
@@ -128,17 +126,17 @@ public class CategoriesController implements Initializable {
             databaseController.subcategoryRepository.list()));
 
         subcategoryNameColumn.setCellValueFactory(c-> new SimpleStringProperty(c.getValue().getName()));
-        subcategoryCreatedAtColumn.setCellValueFactory(c-> new SimpleStringProperty(c.getValue().getCreatedAt().toString()));
+        subcategoryCreatedAtColumn.setCellValueFactory(c-> new SimpleStringProperty(c.getValue().getCreatedAt()));
         subcategoryCategoryColumn.setCellValueFactory(c-> new SimpleStringProperty(c.getValue().getCategory().getName()));
-        subcategoryUpdatedAtColumn.setCellValueFactory(c-> new SimpleStringProperty(c.getValue().getUpdatedAt().toString()));
+        subcategoryUpdatedAtColumn.setCellValueFactory(c-> new SimpleStringProperty(c.getValue().getUpdatedAt()));
         subcategoryTotalSpendColumn.setCellValueFactory(c-> new SimpleStringProperty(String.format("%.2f", c.getValue().getTotal())));
     }
 
-    public void onCategoryChanged(Event event) {
+    public void onCategoryChanged() {
         setCategoryTable();
     }
 
-    public void onSubcategoryChanged(Event event) {
+    public void onSubcategoryChanged() {
         setSubcategoryTable();
     }
 }

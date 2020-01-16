@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 @MappedSuperclass
 @Getter @Setter
@@ -25,4 +26,12 @@ public abstract class Model {
 
     @Column(name = "updated_at")
     private Timestamp updatedAt;
+
+    public String getCreatedAt() {
+        return new SimpleDateFormat("dd/MM/yyyy HH:mm").format(createdAt);
+    }
+
+    public String getUpdatedAt() {
+        return new SimpleDateFormat("dd/MM/yyyy HH:mm").format(updatedAt);
+    }
 }

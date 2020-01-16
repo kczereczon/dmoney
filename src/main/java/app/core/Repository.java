@@ -3,10 +3,15 @@ package app.core;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
+
 import java.lang.reflect.ParameterizedType;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 
 public abstract class Repository<T extends Model> {
 
@@ -50,9 +55,26 @@ public abstract class Repository<T extends Model> {
     }
 
     @SuppressWarnings("unchecked")
+    public List<T> list(Criterion[] criterionArray) {
+        getSession().beginTransaction();
+        Criteria criteria = getSession().createCriteria(type);
+
+        criteria.addOrder(Order.desc("id"));
+        for (Criterion criterion: criterionArray
+             ) {
+            criteria.add(criterion);
+        }
+
+        return criteria.list();
+    }
+
     public List<T> list() {
         getSession().beginTransaction();
-        return getSession().createCriteria(type).list();
+        Criteria criteria = getSession().createCriteria(type);
+
+        criteria.addOrder(Order.desc("id"));
+
+        return criteria.list();
     }
 
 }
