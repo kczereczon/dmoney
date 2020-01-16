@@ -6,12 +6,14 @@ import app.models.Entry;
 import app.models.Subcategory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableListBase;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -42,6 +44,11 @@ public class ApplicationController {
     @FXML
     public BorderPane borderPane;
 
+    public String currentStage;
+
+    public static DashboardController dashboardController;
+    public DialoguesController dialoguesController = new DialoguesController();
+
 
     DatabaseController databaseController = Application.databaseController;
 
@@ -70,29 +77,30 @@ public class ApplicationController {
     }
 
     public void onAddEntryClick() {
-        Entry entry = new Entry(name.getText(),
-            Float.parseFloat(value.getText()),
-            Integer.parseInt(quantity.getText()),
-            categoriesList.getValue(),
-            false);
+        try {
+            Entry entry = new Entry(name.getText(),
+                Float.parseFloat(value.getText()),
+                Integer.parseInt(quantity.getText()),
+                categoriesList.getValue(),
+                direction.getValue().equals("In")
+            );
 
-        Entry entry1 = databaseController.entryRepository.makePersistent(entry);
-
-        if(entry1 != null) {
-            final Stage dialog = new Stage();
-            dialog.initModality(Modality.APPLICATION_MODAL);
-            VBox dialogVbox = new VBox(20);
-            dialogVbox.getChildren().add(new Text("This is a Dialog"));
-            Scene dialogScene = new Scene(dialogVbox, 300, 200);
-            dialog.setScene(dialogScene);
-            dialog.show();
+            databaseController.entryRepository.makePersistent(entry);
+            dialoguesController.showDialogue(dialoguesController.successDialogue);
+        } catch (Exception exception) {
+            dialoguesController.showDialogue(dialoguesController.failDialogue);
         }
+
 
         name.setText("");
         value.setText("");
         quantity.setText("");
         categoriesList.valueProperty().set(null);
 
+        if(dashboardController != null) {
+            dashboardController.setTotalTable();
+            dashboardController.setTodayTable();
+        }
     }
 
     public ApplicationController() {
@@ -117,6 +125,9 @@ public class ApplicationController {
             }
         });
 
+        direction.setItems(FXCollections.observableArrayList("In", "Out"));
+        direction.setValue("Out");
+
         setCategoriesListItems();
     }
 
@@ -132,10 +143,13 @@ public class ApplicationController {
             Node node;
             node = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("views/" + name + ".fxml")));
             borderPane.setCenter(node);
+            currentStage = name;
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+
 
     public void onCategoriesListClicked() {
         setCategoriesListItems();

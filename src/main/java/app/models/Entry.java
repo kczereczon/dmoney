@@ -47,4 +47,8 @@ public class Entry extends Model {
     public Float getTotal() {
         return value * quantity;
     }
+
+    public String getDirection() {
+        return (isIncome) ? "In" : "Out";
+    }
 }

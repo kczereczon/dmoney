@@ -32,6 +32,7 @@ public abstract class Repository<T extends Model> {
 
     public T makePersistent(T entity) {
         getSession().getTransaction().begin();
+        getSession().clear();
         getSession().save(entity);
         getSession().getTransaction().commit();
 
