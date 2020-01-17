@@ -24,7 +24,7 @@ public class Entry extends Model {
     @Column(name = "name")
     @Getter @Setter private String name;
 
-    @OneToOne(cascade=CascadeType.ALL)
+    @OneToOne()
     @JoinColumn(name = "subcategory_id")
     private Subcategory subcategory;
 

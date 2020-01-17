@@ -51,6 +51,7 @@ public class CategoriesController implements Initializable {
     public TableColumn<Subcategory, String> subcategoryTotalSpendColumn;
 
     DatabaseController databaseController = Application.databaseController;
+    DialoguesController dialoguesController = new DialoguesController();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -83,11 +84,15 @@ public class CategoriesController implements Initializable {
 
         Category category = new Category(name);
 
-        databaseController.categoryRepository.makePersistent(category);
-
-        setCategoryTable();
-        setCategorySelectItems();
-        clearCategoryForm();
+        try {
+            databaseController.categoryRepository.makePersistent(category);
+            setCategoryTable();
+            setCategorySelectItems();
+            clearCategoryForm();
+            dialoguesController.showDialogue(dialoguesController.successDialogue);
+        } catch (Exception e) {
+            dialoguesController.showDialogue(dialoguesController.failDialogue);
+        }
     }
 
     public void onAddSubcategoryButtonClicked() {
@@ -96,10 +101,14 @@ public class CategoriesController implements Initializable {
 
         Subcategory subcategory = new Subcategory(name, category);
 
-        databaseController.subcategoryRepository.makePersistent(subcategory);
-
-        setSubcategoryTable();
-        clearSubcategoryForm();
+        try {
+            databaseController.subcategoryRepository.makePersistent(subcategory);
+            setSubcategoryTable();
+            clearSubcategoryForm();
+            dialoguesController.showDialogue(dialoguesController.successDialogue);
+        } catch (Exception e) {
+            dialoguesController.showDialogue(dialoguesController.failDialogue);
+        }
     }
 
     public void clearSubcategoryForm() {

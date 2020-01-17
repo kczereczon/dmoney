@@ -50,16 +50,8 @@ public class DashboardController implements Initializable {
     }
 
     public void setTodayTable() {
-
-        Timestamp startDay = new Timestamp(atStartOfDay(new Date(System.currentTimeMillis())));
-        Timestamp endDay = new Timestamp(atEndOfDay(new Date(System.currentTimeMillis())));
-
         ObservableList<Entry> observableList = FXCollections.observableArrayList(
-            databaseController.entryRepository.list(new Criterion[]{Restrictions.between("createdAt",
-                startDay,
-                endDay
-            )})
-        );
+            databaseController.entryRepository.listToday());
         todayEntries.setItems(observableList);
     }
 
@@ -68,32 +60,12 @@ public class DashboardController implements Initializable {
         allEntries.setItems(observableList);
     }
 
-    public long atEndOfDay(Date date) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.set(Calendar.HOUR_OF_DAY, 23);
-        calendar.set(Calendar.MINUTE, 59);
-        calendar.set(Calendar.SECOND, 59);
-        calendar.set(Calendar.MILLISECOND, 999);
-        return calendar.getTimeInMillis();
-    }
-
-    public long atStartOfDay(Date date) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-        return calendar.getTimeInMillis();
-    }
-
     public TableView<Entry> loadTableViewComponent() {
         try {
             TableView<Entry> tableView;
             tableView = FXMLLoader.load(
                 Objects.requireNonNull(
-                    getClass().getClassLoader().getResource("views/entriesList.fxml")
+                    getClass().getClassLoader().getResource("views/components/entriesList.fxml")
                 )
             );
 
