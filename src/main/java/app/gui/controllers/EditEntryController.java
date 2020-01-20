@@ -40,11 +40,14 @@ public class EditEntryController extends Controller implements Initializable{
 
     @Setter
     private EntriesListController entriesListController;
+    @Setter
+    private DashboardController dashboardController;
 
     private Stage stage;
 
     public void onRemoveButtonClicked(MouseEvent mouseEvent) {
         databaseController.entryRepository.remove(entry);
+        dashboardController.resetTables();
 
         stage.close();
     }
@@ -57,6 +60,7 @@ public class EditEntryController extends Controller implements Initializable{
         entry.setIsIncome(directionComboBox.getValue().equals("In"));
 
         databaseController.entryRepository.update(entry);
+        dashboardController.resetTables();
         stage.close();
     }
 

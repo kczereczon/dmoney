@@ -1,15 +1,14 @@
 package app.gui.controllers;
 
-import app.gui.components.EditEntryComponent;
+import app.gui.components.EditEntryDialogueComponent;
 import app.models.Entry;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
+import lombok.Setter;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -35,15 +34,22 @@ public class EntriesListController implements Initializable {
 
     DialoguesController dialoguesController = new DialoguesController();
 
+    //communication between controllers
+    @Setter
+    private DashboardController dashboardController;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         bindColumns();
 
         entries.setOnMousePressed(e -> {
             if (e.isPrimaryButtonDown() && e.getClickCount() == 2) {
-                EditEntryComponent editEntryComponent = new EditEntryComponent(
+                EditEntryDialogueComponent editEntryComponent = new EditEntryDialogueComponent(
                     entries.getSelectionModel().getSelectedItem(),
                     this);
+
+                editEntryComponent.componentController.setDashboardController(dashboardController);
+
                 editEntryComponent.showDialogue();
             }
         });

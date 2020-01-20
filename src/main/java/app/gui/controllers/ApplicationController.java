@@ -141,7 +141,7 @@ public class ApplicationController {
     private void loadPage(String name) {
         try {
             Node node;
-            node = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("views/" + name + ".fxml")));
+            node = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("views/screens/" + name + ".fxml")));
             borderPane.setCenter(node);
             currentStage = name;
         } catch (IOException e) {

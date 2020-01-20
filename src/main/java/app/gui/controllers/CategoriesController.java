@@ -2,6 +2,8 @@ package app.gui.controllers;
 
 import app.DatabaseController;
 import app.gui.Application;
+import app.gui.components.EditCategoryComponent;
+import app.gui.components.EditEntryDialogueComponent;
 import app.models.Category;
 import app.models.Subcategory;
 import javafx.beans.property.SimpleStringProperty;
@@ -121,13 +123,35 @@ public class CategoriesController implements Initializable {
     }
 
     private void setCategoryTable() {
-        categoriesTable.setItems(FXCollections.observableArrayList(
-            databaseController.categoryRepository.list()));
+
+        setCategoryTableItems();
 
         categoryNameColumn.setCellValueFactory(c-> new SimpleStringProperty(c.getValue().getName()));
         categoryCreatedAtColumn.setCellValueFactory(c-> new SimpleStringProperty(c.getValue().getCreatedAt()));
         categoryUpdatedAtColumn.setCellValueFactory(c-> new SimpleStringProperty(c.getValue().getUpdatedAt()));
         categoryTotalSpendColumn.setCellValueFactory(c-> new SimpleStringProperty(String.format("%.2f", c.getValue().getTotal())));
+
+        categoriesTable.setOnMousePressed(e -> {
+            if (e.isPrimaryButtonDown() && e.getClickCount() == 2) {
+                EditCategoryComponent editEntryComponent = new EditCategoryComponent();
+
+                editEntryComponent.componentController.setCategory(categoriesTable.getSelectionModel().getSelectedItem());
+                editEntryComponent.componentController.setCategoriesController(this);
+
+                editEntryComponent.showDialogue();
+            }
+        });
+    }
+
+    public void setCategoryTableItems() {
+        categoriesTable.setItems(FXCollections.observableArrayList(
+            databaseController.categoryRepository.list()));
+    }
+
+    public void resetCategoryTableItems() {
+        categoriesTable.getItems().clear();
+        categoriesTable.setItems(FXCollections.observableArrayList(
+            databaseController.categoryRepository.list()));
     }
 
     private void setSubcategoryTable() {

@@ -2,23 +2,15 @@ package app.gui.controllers;
 
 import app.DatabaseController;
 import app.gui.Application;
+import app.gui.components.EntryListComponent;
 import app.models.Entry;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TableView;
 import javafx.scene.layout.VBox;
-import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.Restrictions;
 
-import java.io.IOException;
 import java.net.URL;
-import java.sql.Timestamp;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class DashboardController implements Initializable {
@@ -28,8 +20,8 @@ public class DashboardController implements Initializable {
     @FXML
     public VBox todayEntriesVBox;
 
-    public TableView<Entry> allEntries;
-    public TableView<Entry> todayEntries;
+    public EntryListComponent allEntriesComponent;
+    public EntryListComponent todayEntriesComponent;
 
     private DatabaseController databaseController = Application.databaseController;
 
@@ -39,11 +31,17 @@ public class DashboardController implements Initializable {
         //for refreshing entries list
         ApplicationController.dashboardController = this;
 
-        allEntries = loadTableViewComponent();
-        todayEntries = loadTableViewComponent();
+        allEntriesComponent = new EntryListComponent();
+        todayEntriesComponent = new EntryListComponent();
 
-        allEntriesVBox.getChildren().setAll(allEntries);
-        todayEntriesVBox.getChildren().setAll(todayEntries);
+
+        //setting up communication between controllers
+        allEntriesComponent.componentController.setDashboardController(this);
+        todayEntriesComponent.componentController.setDashboardController(this);
+
+        //adding fxml view to gui
+        allEntriesVBox.getChildren().setAll(allEntriesComponent.component);
+        todayEntriesVBox.getChildren().setAll(todayEntriesComponent.component);
 
         setTodayTable();
         setTotalTable();
@@ -52,28 +50,18 @@ public class DashboardController implements Initializable {
     public void setTodayTable() {
         ObservableList<Entry> observableList = FXCollections.observableArrayList(
             databaseController.entryRepository.listToday());
-        todayEntries.setItems(observableList);
+        todayEntriesComponent.component.setItems(observableList);
     }
 
     public void setTotalTable() {
         ObservableList<Entry> observableList = FXCollections.observableArrayList(databaseController.entryRepository.list());
-        allEntries.setItems(observableList);
+        allEntriesComponent.component.setItems(observableList);
     }
 
-    public TableView<Entry> loadTableViewComponent() {
-        try {
-            TableView<Entry> tableView;
-            tableView = FXMLLoader.load(
-                Objects.requireNonNull(
-                    getClass().getClassLoader().getResource("views/components/entriesList.fxml")
-                )
-            );
-
-            return tableView;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return null;
+    public void resetTables() {
+        allEntriesComponent.component.getItems().clear();
+        todayEntriesComponent.component.getItems().clear();
+        setTotalTable();
+        setTodayTable();
     }
 }
