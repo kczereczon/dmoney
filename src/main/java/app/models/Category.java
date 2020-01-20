@@ -19,8 +19,8 @@ public class Category extends Model {
     @Column(name = "name")
     @Getter @Setter private String name;
 
-    @OneToMany(cascade=CascadeType.ALL)
-    @JoinColumn(name = "category_id")
+    @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.REMOVE, orphanRemoval = true)
+    @JoinColumn(name = "category_id", updatable = false)
     private List<Subcategory> subcategories;
 
     public Float getTotal() {

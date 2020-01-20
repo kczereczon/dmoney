@@ -4,6 +4,7 @@ import app.DatabaseController;
 import app.gui.Application;
 import app.gui.components.EditCategoryComponent;
 import app.gui.components.EditEntryDialogueComponent;
+import app.gui.components.EditSubcategoryComponent;
 import app.models.Category;
 import app.models.Subcategory;
 import javafx.beans.property.SimpleStringProperty;
@@ -133,12 +134,12 @@ public class CategoriesController implements Initializable {
 
         categoriesTable.setOnMousePressed(e -> {
             if (e.isPrimaryButtonDown() && e.getClickCount() == 2) {
-                EditCategoryComponent editEntryComponent = new EditCategoryComponent();
+                EditCategoryComponent editCategoryComponent = new EditCategoryComponent();
 
-                editEntryComponent.componentController.setCategory(categoriesTable.getSelectionModel().getSelectedItem());
-                editEntryComponent.componentController.setCategoriesController(this);
+                editCategoryComponent.componentController.setCategory(categoriesTable.getSelectionModel().getSelectedItem());
+                editCategoryComponent.componentController.setCategoriesController(this);
 
-                editEntryComponent.showDialogue();
+                editCategoryComponent.showDialogue();
             }
         });
     }
@@ -150,8 +151,19 @@ public class CategoriesController implements Initializable {
 
     public void resetCategoryTableItems() {
         categoriesTable.getItems().clear();
-        categoriesTable.setItems(FXCollections.observableArrayList(
-            databaseController.categoryRepository.list()));
+        setCategoryTableItems();
+    }
+
+    public void setSubcategoryTableItems() {
+        subcategoryTable.setItems(FXCollections.observableArrayList(
+            databaseController.subcategoryRepository.list()));
+    }
+
+    public void resetSubcategoryTableItems() {
+
+        System.out.println("Clearing");
+        subcategoryTable.getItems().clear();
+        setSubcategoryTableItems();
     }
 
     private void setSubcategoryTable() {
@@ -163,6 +175,17 @@ public class CategoriesController implements Initializable {
         subcategoryCategoryColumn.setCellValueFactory(c-> new SimpleStringProperty(c.getValue().getCategory().getName()));
         subcategoryUpdatedAtColumn.setCellValueFactory(c-> new SimpleStringProperty(c.getValue().getUpdatedAt()));
         subcategoryTotalSpendColumn.setCellValueFactory(c-> new SimpleStringProperty(String.format("%.2f", c.getValue().getTotal())));
+
+        subcategoryTable.setOnMousePressed(e -> {
+            if (e.isPrimaryButtonDown() && e.getClickCount() == 2) {
+                EditSubcategoryComponent editSubcategoryComponent = new EditSubcategoryComponent();
+
+                editSubcategoryComponent.componentController.setSubcategory(subcategoryTable.getSelectionModel().getSelectedItem());
+                editSubcategoryComponent.componentController.setCategoriesController(this);
+
+                editSubcategoryComponent.showDialogue();
+            }
+        });
     }
 
     public void onCategoryChanged() {

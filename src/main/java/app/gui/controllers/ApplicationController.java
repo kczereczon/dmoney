@@ -101,6 +101,10 @@ public class ApplicationController {
             dashboardController.setTotalTable();
             dashboardController.setTodayTable();
         }
+
+        if(!currentStage.equals("dashboard")) {
+            loadPage("dashboard");
+        }
     }
 
     public ApplicationController() {

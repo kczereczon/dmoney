@@ -15,14 +15,14 @@ import java.util.List;
 public class Subcategory extends Model {
 
     @Column(name = "name")
-    @NonNull @Getter @Setter private String name;
+    @NonNull private String name;
 
     @OneToOne()
+    @JoinColumn(name="category_id")
     @NonNull private Category category;
 
-
-    @OneToMany
-    @JoinColumn(name = "subcategory_id")
+    @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.REMOVE, orphanRemoval = true)
+    @JoinColumn(name = "subcategory_id", updatable = false)
     private List<Entry> entries;
 
     public Float getTotal() {
