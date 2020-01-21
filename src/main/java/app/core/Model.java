@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
@@ -22,10 +23,10 @@ public abstract class Model {
     private int id;
 
     @Column(name = "created_at")
-    private Timestamp createdAt;
+    protected Timestamp createdAt;
 
     @Column(name = "updated_at")
-    private Timestamp updatedAt;
+    protected Timestamp updatedAt;
 
     public String getCreatedAt() {
         return new SimpleDateFormat("dd/MM/yyyy HH:mm").format(createdAt);
@@ -33,5 +34,13 @@ public abstract class Model {
 
     public String getUpdatedAt() {
         return new SimpleDateFormat("dd/MM/yyyy HH:mm").format(updatedAt);
+    }
+
+    public Timestamp getTrueCreatedAt() {
+        return createdAt;
+    }
+
+    public Timestamp getTrueUpdatedAt() {
+        return updatedAt;
     }
 }

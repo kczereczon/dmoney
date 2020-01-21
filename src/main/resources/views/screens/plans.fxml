@@ -10,11 +10,11 @@
     <children>
         <TabPane tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
          <tabs>
-            <Tab text="Creator" styleClass="dark-background">
+            <Tab styleClass="dark-background" text="Creator">
                <content>
-                  <ScrollPane fitToWidth="true" prefHeight="200.0" prefWidth="200.0">
+                  <ScrollPane fitToWidth="true" prefHeight="200.0" prefWidth="200.0" styleClass="dark-background">
                      <content>
-                        <VBox prefHeight="400.0" prefWidth="405.0">
+                        <VBox fx:id="creatorVBox" alignment="CENTER" prefHeight="403.0" prefWidth="405.0" spacing="10.0" styleClass="dark-background">
                            <padding>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </padding>
@@ -23,14 +23,15 @@
                   </ScrollPane>
                </content>
             </Tab>
-            <Tab text="List" styleClass="dark-background">
+            <Tab styleClass="dark-background" text="List">
                <content>
-                  <VBox prefHeight="200.0" prefWidth="275.0">
+                  <VBox prefHeight="200.0" prefWidth="275.0" styleClass="dark-background">
                      <children>
-                        <TableView prefHeight="200.0" prefWidth="200.0">
+                        <TableView prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                           <columns>
                             <TableColumn prefWidth="75.0" text="Category" />
                             <TableColumn prefWidth="75.0" text="Month" />
+                              <TableColumn prefWidth="75.0" text="Year" />
                               <TableColumn prefWidth="75.0" text="Value" />
                           </columns>
                            <columnResizePolicy>
